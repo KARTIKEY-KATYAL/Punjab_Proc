@@ -29,6 +29,8 @@ if($numrows>0){
 		<meta name="theme-color" content="#ffffff">
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-black.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!-- <script> var pythonUrl = "http://103.148.165.96:5000/"; var directory = "" </script> -->
+		<script> var pythonUrl = "http://localhost:5000/"; var directory = "" </script>
     </head>
     <body>
         <!-- START PAGE CONTAINER -->
@@ -76,9 +78,7 @@ if($numrows>0){
 					<li <?php if ($currentFile == 'Mill.php') echo 'class="active"'; ?>>
 						<a href="Mill.php"> <span class="xn-text">Mill</span></a>
 					</li>
-					<li <?php if ($currentFile == 'MillReplica.php') echo 'class="active"'; ?>>
-						<a href="MillReplica.php"> <span class="xn-text">Mill Inter</span></a>
-					</li>
+
 					<li <?php if ($currentFile == 'Warehouse.php') echo 'class="active"'; ?>>
 						<a href="Warehouse.php"> <span class="xn-text">Warehouse</span></a>
 					</li>

@@ -19,9 +19,7 @@ $mapData = [
     "PC ID" => "id",
     "Latitude" => "latitude",
     "Longitude" => "longitude",
-    "Mota" => "mota",
-    "Patla" => "patla",
-    "Saran" => "saran",
+    "Paddy Arrival" => "Paddy_Arrival",
     "Active/Not-Active" => "active"
 ];
 
@@ -104,14 +102,12 @@ try{
             $id = -1;
             $latitude = -1;
             $longitude = -1;
-            $mota = -1;
-            $patla = -1;
-            $saran = -1;
+            $Paddy_Arrival = -1;
             $active = -1;
 
             while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
                 if($i>0){
-                    if($district<0 or $name<0 or $id<0 or $mota<0 or $patla<0 or $saran<0 or $latitude<0 or $longitude<0 or $active<0){
+                    if($district<0 or $name<0 or $id<0 or $Paddy_Arrival<0 or $latitude<0 or $longitude<0 or $active<0){
                         echo "Error : You have modified Template Header, please check";
                         exit();
                     }
@@ -121,8 +117,8 @@ try{
                         $redirect = 0;
                     }
 
-                    if(!isStringNumber($column[$saran])){
-                        echo "Error : Check Saran Value: ".$column[$saran];
+                    if(!isStringNumber($column[$Paddy_Arrival])){
+                        echo "Error : Check Paddy Arrival Value: ".$column[$Paddy_Arrival];
                         echo "</br>";
                         $redirect = 0;
                     }
@@ -162,9 +158,7 @@ try{
                     filterData($column[$longitude]);
                     filterData($column[$name]);
                     filterData($column[$id]);
-                    filterData($column[$mota]);
-                    filterData($column[$patla]);
-                    filterData($column[$saran]);
+                    filterData($column[$Paddy_Arrival]);
                     filterData($column[$active]);
 
                     $PC->setDistrict(ucwords(strtolower($column[$district])));
@@ -172,9 +166,7 @@ try{
                     $PC->setLongitude($column[$longitude]);
                     $PC->setName($column[$name]);
                     $PC->setId($column[$id]);
-                    $PC->setMota($column[$mota]);
-                    $PC->setPatla($column[$patla]);
-                    $PC->setSaran($column[$saran]);
+                    $PC->setPaddyArrival($column[$Paddy_Arrival]);
                     $PC->setActive($column[$active]);
                     $query_check = $PC->checkEdit($PC);
                     $query_result = mysqli_query($con, $query_check);
@@ -203,16 +195,8 @@ try{
                             case $reverseMapData["id"]:
                                 $id = $j;
                                 break;
-                            
-                            case $reverseMapData["mota"]:
-                                $mota = $j;
-                                break;
-                            
-                            case $reverseMapData["patla"]:
-                                $patla = $j;
-                                break;
-                            case $reverseMapData["saran"]:
-                                $saran = $j;
+                            case $reverseMapData["Paddy_Arrival"]:
+                                $Paddy_Arrival = $j;
                                 break;
                             case $reverseMapData["active"]:
                                 $active = $j;
@@ -249,9 +233,7 @@ try{
             $id = -1;
             $latitude = -1;
             $longitude = -1;
-            $mota = -1;
-            $patla = -1;
-            $saran = -1;
+            $Paddy_Arrival = -1;
             $active = -1;
 
             while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
@@ -262,9 +244,7 @@ try{
                     filterData($column[$longitude]);
                     filterData($column[$name]);
                     filterData($column[$id]);
-                    filterData($column[$mota]);
-                    filterData($column[$patla]);
-                    filterData($column[$saran]);
+                    filterData($column[$Paddy_Arrival]);
                     filterData($column[$active]);
 
                     $PC->setDistrict($column[$district]);
@@ -272,9 +252,7 @@ try{
                     $PC->setLongitude($column[$longitude]);
                     $PC->setName($column[$name]);
                     $PC->setId($column[$id]);
-                    $PC->setMota($column[$mota]);
-                    $PC->setPatla($column[$patla]);
-                    $PC->setSaran($column[$saran]);
+                    $PC->setPaddyArrival($column[$Paddy_Arrival]);
                     $PC->setActive($column[$active]);
                     $query_check = $PC->checkEdit($PC);
                     $query_result = mysqli_query($con, $query_check);
@@ -306,14 +284,8 @@ try{
                             case $reverseMapData["id"]:
                                 $id = $j;
                                 break;
-                            case $reverseMapData["mota"]:
-                                $mota = $j;
-                                break;
-                            case $reverseMapData["patla"]:
-                                $patla = $j;
-                                break;
-                            case $reverseMapData["saran"]:
-                                $saran = $j;
+                            case $reverseMapData["Paddy_Arrival"]:
+                                $Paddy_Arrival = $j;
                                 break;
                             case $reverseMapData["active"]:
                                 $active = $j;

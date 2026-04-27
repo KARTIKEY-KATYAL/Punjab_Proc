@@ -79,8 +79,8 @@ if (
 
 $errors = [];
 
-if(!isStringNumber($_POST["saran"])){
-	echo "Error : Check Saran Value";
+if(!isStringNumber($_POST["Paddy_Arrival"])){
+  echo "Error : Check Paddy Arrival Value";
 	exit();
 }
 
@@ -93,9 +93,7 @@ if(password_verify($person->getPassword(), $dbHashedPassword)){
     $name = formatName($_POST["name"]);
     $id = $_POST["id"];
     
-    $mota = $_POST["mota"];
-    $patla = $_POST["patla"];
-    $saran = $_POST["saran"];
+    $Paddy_Arrival = $_POST["Paddy_Arrival"];
    
     $uniqueid = uniqid("PC_",);
 
@@ -107,9 +105,7 @@ if(password_verify($person->getPassword(), $dbHashedPassword)){
     $PC->setName($name);
     $PC->setId($id);
     
-    $PC->setMota($mota);
-    $PC->setPatla($patla);
-    $PC->setSaran($saran);
+    $PC->setPaddyArrival($Paddy_Arrival);
     
 	$PC->setActive("1");
 

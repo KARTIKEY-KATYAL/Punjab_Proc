@@ -3,7 +3,6 @@ require('util/Connection.php');
 require('util/SessionCheck.php');
 require('Header.php');
 ?>
-
 <script src="crypto-js/crypto-js.js"></script>
 <script src="js/Encryption.js"></script>
 
@@ -29,11 +28,11 @@ require('Header.php');
 
                     <div class="row">
                         <div class="col-md-12">
-							<a href="api/BulkMillDownloadEdit.php" style="float:right;margin-top:10px;margin-right:13px"><button type="button" class="btn btn-info">Download Data</button></a>
+							<a href="api/BulkMillDownloadEdit.php" style="float:right;margin-top:10px;margin-right:13px"><button type="button" class="btn btn-info">Download Data Template</button></a>
                             <form action="api/BulkMillDataEdit.php" method="POST" class="form-horizontal" enctype = "multipart/form-data">
                             <div class="panel panel-default">
                                <div class="panel-body">
-                                    <p>Download Data, edit the file and upload it. <b>Don't edit id column</b>.</p>
+                                    <p>Download existing data template and upload the edited data.</p>
                                 </div>
 
                              <div class="panel-body">
@@ -42,13 +41,13 @@ require('Header.php');
 
                                         <div class="col-md-6">
 											<div class="form-group">
-                                                <label class="col-md-3 control-label">Upload Edited File*</label>
+                                                <label class="col-md-3 control-label">Upload Template*</label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa-info"></span></span>
                                                         <input type="file" class="form-control" name="file" id="file" accept=".csv">
                                                     </div>
-                                                    <span class="help-block">Edited File in CSV format</span>
+                                                    <span class="help-block">Template File in CSV format</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -63,7 +62,7 @@ require('Header.php');
                                     <button class="btn btn-primary pull-right" onclick="showPopup()" type="button">Submit</button>
                                 </div>
 								<div id="popup" class="popup">
-										<a class="close" onclick="hidePopup()" style="font-size:25px">×</a>
+										<a class="close" onclick="hidePopup()" style="font-size:25px">&times;</a>
 										</br></br>
 										
 										<div class="col-md-6">
@@ -144,6 +143,8 @@ require('Header.php');
         <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>
         <!-- END PAGE PLUGINS -->
+		
+		
 		<script>
 		document.getElementById('popup').style.display = 'none';
 		function showPopup() {
