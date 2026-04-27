@@ -502,11 +502,11 @@ require('Header.php');
 									<div class="card h-100"
 										style="background-color:#F39C12; color:white; padding:12px; font-weight: bold;">
 										<div style="font-size:20px" id="total_demand"></div>
-										<div style="font-size:14px">Total Procurement Mota(Qtl)</div>
+										<div style="font-size:14px">Total Paddy Arrival(Qtl)</div>
 									</div>
 								</div>
 								
-								<div class="col-md-4 mb-4">
+								<div class="col-md-4 mb-4" style="display:none;">
 									<div class="card h-100"
 										style="background-color:#8E44AD; color:white; padding:12px; font-weight: bold;">
 										<div style="font-size:20px" id="total_demand_rice"></div>
@@ -514,7 +514,7 @@ require('Header.php');
 									</div>
 								</div>
 								
-								<div class="col-md-4 mb-4">
+								<div class="col-md-4 mb-4" style="display:none;">
 									<div class="card h-100"
 										style="background-color:#1ABC9C; color:white; padding:12px; font-weight: bold;">
 										<div style="font-size:20px" id="total_supply"></div>
@@ -1381,7 +1381,7 @@ function handleStateCheckboxChange() {
 				var formattedTotalCapacity2 = totalCapacity2.toLocaleString();
 
 				document.getElementById("totalFciDemand").innerHTML = "<span style='color: white; font-size: 14px;'>" + "Total Storage Mota: " + formattedTotalDemand + " (Qtl)</span>";
-				document.getElementById("totalFciSupply").innerHTML = "<span style='color: white; font-size: 14px;'>" + "Total Procurement Mota: " + formattedTotalCapacity + " (Qtl)</span>";
+				document.getElementById("totalFciSupply").innerHTML = "<span style='color: white; font-size: 14px;'>" + "Total Paddy Arrival: " + formattedTotalCapacity + " (Qtl)</span>";
 				
 				document.getElementById("totalFciDemand1").innerHTML = "<span style='color: white; font-size: 14px;'>" + "Total Storage Patla: " + formattedTotalDemand1 + " (Qtl)</span>";
 				document.getElementById("totalFciSupply1").innerHTML = "<span style='color: white; font-size: 14px;'>" + "Total Procurement Patla: " + formattedTotalCapacity1 + " (Qtl)</span>";

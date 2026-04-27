@@ -9,9 +9,7 @@ $name = "";
 $id = "";
 $latitude = "";
 $longitude = "";
-$mota = "";
-$patla = "";
-$saran = "";
+$Paddy_Arrival = "";
 $active = "";
 
 if(isset($_POST["uid"])){
@@ -26,9 +24,7 @@ if(isset($_POST["uid"])){
 		$id = $row['id'];
 		$latitude = $row['latitude'];
 		$longitude = $row['longitude'];
-		$mota = $row['mota'];
-		$patla = $row['patla'];
-		$saran = $row['saran'];
+		$Paddy_Arrival = $row['Paddy_Arrival'];
 		$active = $row['active'];
 	}
 	else{
@@ -130,36 +126,13 @@ else{
                                             </div>
 											
 											<div class="form-group">
-                                                <label class="col-md-3 control-label">Mota*</label>
+                                                <label class="col-md-3 control-label">Paddy Arrival*</label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="mota" name="mota" value="<?php echo $mota ?>" required />
+                                                        <input type="text" class="form-control" id="Paddy_Arrival" name="Paddy_Arrival" value="<?php echo $Paddy_Arrival ?>" required />
                                                     </div>
-                                                    <span class="help-block">Mota</span>
-                                                </div>
-                                            </div>
-											
-											<div class="form-group">
-                                                <label class="col-md-3 control-label">Patla*</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="patla" name="patla" value="<?php echo $patla ?>" required />
-                                                    </div>
-                                                    <span class="help-block">Patla</span>
-                                                </div>
-                                            </div>
-
-											
-											<div class="form-group">
-                                                <label class="col-md-3 control-label">Saran*</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="saran" name="saran" value="<?php echo $saran ?>" required />
-                                                    </div>
-                                                    <span class="help-block">Saran</span>
+                                                    <span class="help-block">Paddy Arrival</span>
                                                 </div>
                                             </div>
 											
@@ -308,13 +281,11 @@ else{
 			var latitude = document.getElementById('latitude').value;
             var longitude = document.getElementById('longitude').value;
 			var id = document.getElementById('id').value;
-			var mota = document.getElementById('mota').value;
-            var patla = document.getElementById('patla').value;
-            var saran = document.getElementById('saran').value;
+			var Paddy_Arrival = document.getElementById('Paddy_Arrival').value;
             var district = document.getElementById('district').value;
             
 
-            if (name === '' || latitude === '' || longitude === '' || id === '' || mota === '' || patla === '' || saran === '' || district === '') {
+            if (name === '' || latitude === '' || longitude === '' || id === '' || Paddy_Arrival === '' || district === '') {
                 alert('Please enter all fields');
                 return false;
             }

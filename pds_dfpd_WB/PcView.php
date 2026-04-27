@@ -53,9 +53,7 @@ $tablename = "pc_".$id;
 												<th style="font-size:15px">PC ID</th> 
 												<th style="font-size:15px">Latitude</th>
 												<th style="font-size:15px">Longitude</th>
-												<th style="font-size:15px">Mota</th>
-												<th style="font-size:15px">Patla</th>
-												<th style="font-size:15px">Saran</th>
+												<th style="font-size:15px">Paddy Arrival</th>
 												<th style="font-size:15px">Active</th>
                                             </tr>
                                         </thead>
@@ -74,9 +72,7 @@ $tablename = "pc_".$id;
 											"<td>{$row['id']}</td>".
 											"<td>{$row['latitude']}</td>".
 											"<td>{$row['longitude']}</td>".
-											"<td>{$row['mota']}</td>".
-											"<td>{$row['patla']}</td>".
-											"<td>{$row['saran']}</td>".
+											"<td>{$row['Paddy_Arrival']}</td>".
 											"<td>{$row['active']}</td></tr>";
 										}
 										

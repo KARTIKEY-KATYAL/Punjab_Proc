@@ -20,9 +20,7 @@ $mapData = [
     "PC ID"              => "id",
     "Latitude"           => "latitude",
     "Longitude"          => "longitude",
-    "Mota"               => "mota",
-    "Patla"              => "patla",
-    "Saran"              => "saran",
+    "Paddy Arrival"      => "Paddy_Arrival",
     "Active/Not-Active"  => "active"
 ];
 
@@ -85,7 +83,7 @@ try {
     $file = fopen($fileName, "r");
     $i = 0;
 
-    $district = $name = $id = $latitude = $longitude = $mota = $patla = $saran = $active = -1;
+    $district = $name = $id = $latitude = $longitude = $Paddy_Arrival = $active = -1;
 
     while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
 
@@ -98,9 +96,7 @@ try {
                     case $reverseMapData["id"]:        $id = $j; break;
                     case $reverseMapData["latitude"]:  $latitude = $j; break;
                     case $reverseMapData["longitude"]: $longitude = $j; break;
-                    case $reverseMapData["mota"]:      $mota = $j; break;
-                    case $reverseMapData["patla"]:     $patla = $j; break;
-                    case $reverseMapData["saran"]:     $saran = $j; break;
+                    case $reverseMapData["Paddy_Arrival"]: $Paddy_Arrival = $j; break;
                     case $reverseMapData["active"]:    $active = $j; break;
                 }
             }
@@ -108,7 +104,7 @@ try {
             if (
                 $district < 0 || $name < 0 || $id < 0 ||
                 $latitude < 0 || $longitude < 0 ||
-                $mota < 0 || $patla < 0 || $saran < 0 || $active < 0
+                $Paddy_Arrival < 0 || $active < 0
             ) {
                 echo "Error : You have modified Template Header, please check";
                 exit();
@@ -122,8 +118,8 @@ try {
                 $redirect = 0;
             }
 
-            if (!isNumber($column[$mota]) || !isNumber($column[$patla]) || !isNumber($column[$saran])) {
-                echo "Error : Mota / Patla / Saran must be numeric<br>";
+            if (!isNumber($column[$Paddy_Arrival])) {
+                echo "Error : Paddy Arrival must be numeric<br>";
                 $redirect = 0;
             }
 
@@ -187,9 +183,7 @@ while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
         $PC->setId($column[$id]);
         $PC->setLatitude($column[$latitude]);
         $PC->setLongitude($column[$longitude]);
-        $PC->setMota($column[$mota]);
-        $PC->setPatla($column[$patla]);
-        $PC->setSaran($column[$saran]);
+        $PC->setPaddyArrival($column[$Paddy_Arrival]);
         $PC->setActive($column[$active]);
 
         if (mysqli_num_rows(mysqli_query($con, $PC->checkInsert($PC))) == 0) {
