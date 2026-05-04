@@ -1117,7 +1117,7 @@ def save_to_database_leg1(month, year, day):
         cursor.execute(mill_replica_drop_query)
         connection.commit()
         
-        create_replica_query = ("CREATE TABLE " + mill_replica_table + " (uniqueid VARCHAR(100) NOT NULL, district VARCHAR(100) NOT NULL, to_district VARCHAR(100) NOT NULL, name VARCHAR(255) NOT NULL, id VARCHAR(100) NOT NULL, type VARCHAR(100) NOT NULL, latitude VARCHAR(100) NOT NULL, longitude VARCHAR(100) NOT NULL, milling_capacity VARCHAR(100) NOT NULL, performance_factor INT(11), active VARCHAR(10) NOT NULL DEFAULT '1')")
+        create_replica_query = ("CREATE TABLE " + mill_replica_table + " (uniqueid VARCHAR(100) NOT NULL, district VARCHAR(100) NOT NULL, to_district VARCHAR(100) NOT NULL, name VARCHAR(255) NOT NULL, id VARCHAR(100) NOT NULL, type VARCHAR(100) NOT NULL, latitude VARCHAR(100) NOT NULL, longitude VARCHAR(100) NOT NULL, incoming_min_mota VARCHAR(100), incoming_min_patla VARCHAR(100), incoming_min_saran VARCHAR(100), outgoing_min_mota VARCHAR(100), outgoing_min_patla VARCHAR(100), outgoing_min_saran VARCHAR(100), milling_capacity VARCHAR(100) NOT NULL, milling_capacity1 VARCHAR(100), milling_capacity2 VARCHAR(100), active VARCHAR(10) NOT NULL DEFAULT '1')")
         cursor.execute(create_replica_query)
         connection.commit()
         
@@ -1400,16 +1400,11 @@ def processFile():
 
 
         FPS.rename(columns={
-            'Milling_Process': 'Allocation_Wheat',
             'Mill_Capacity': 'Capacity',
-        
             }, inplace=True)
 
 
-        FPS['Demand'] = FPS['Allocation_Wheat']
-
-        # Ensure numeric
-        import numpy as np
+        FPS['Demand'] = FPS['Capacity']
 
         # Ensure numeric
         FPS['Factor'] = FPS['Factor'].astype(float)
@@ -1739,6 +1734,8 @@ def processFile():
 
         
         node1 = node1[['WH_ID', 'WH_Lat', 'WH_Long','concatenate']]
+        node1['WH_ID'] = node1['WH_ID'].astype(str)
+        Warehouse['WH_ID'] = Warehouse['WH_ID'].astype(str)
         War = pd.merge(node1, Warehouse, on='WH_ID')
         df1_w = War[War['concatenate'] != War['Lat_Long_r']]
         Warehouse_ID = df1_w['WH_ID'].unique()
@@ -1746,6 +1743,8 @@ def processFile():
         
         
         node2 = node2[['FPS_ID', 'FPS_Lat', 'FPS_Long','concatenate1']]
+        node2['FPS_ID'] = node2['FPS_ID'].astype(str)
+        FPS['FPS_ID'] = FPS['FPS_ID'].astype(str)
         FPS1 = pd.merge(node2, FPS, on='FPS_ID')
         df1_f = FPS1[FPS1['concatenate1'] != FPS1['Lat_Long_r']]
         FPS_ID = df1_f['FPS_ID'].unique()
@@ -4341,8 +4340,8 @@ def processFile_leg1():
             json_object = json.loads(json_data)
             return json.dumps(json_object, indent=1)
         input = pd.ExcelFile('Backend//Data_2.xlsx')
-        node1 = pd.read_excel(input,sheet_name="A.2 FCI")
-        node2 = pd.read_excel(input,sheet_name="A.1 Warehouse")
+        node1 = pd.read_excel(input,sheet_name="A.1 Warehouse")
+        node2 = pd.read_excel(input,sheet_name="A.2 FCI")
 
         dist = [[0 for a in range(len(node2["SW_ID"]))] for b in range(len(node1["WH_ID"]))]
         phi_1 = []
@@ -4354,8 +4353,8 @@ def processFile_leg1():
         for i in node1.index:
             for j in node2.index:
                 phi_1=math.radians(node1["WH_Lat"][i])
-                phi_2=math.radians(node2["SW_lat"][j])
-                delta_phi=math.radians(node2["SW_lat"][j]-node1["WH_Lat"][i])
+                phi_2=math.radians(node2["SW_Lat"][j])
+                delta_phi=math.radians(node2["SW_Lat"][j]-node1["WH_Lat"][i])
                 delta_lambda=math.radians(node2["SW_Long"][j]-node1["WH_Long"][i])
                 x=math.sin(delta_phi / 2.0) ** 2 + math.cos(phi_1) * math.cos(phi_2) * math.sin(delta_lambda / 2.0) ** 2
                 y=2 * math.atan2(math.sqrt(x), math.sqrt(1 - x))
@@ -4367,8 +4366,8 @@ def processFile_leg1():
 
         WKB = excelrd.open_workbook('Backend//Distance_Matrix_Leg1.xlsx')
         Sheet1 = WKB.sheet_by_index(0)
-        FCI = pd.read_excel(USN, sheet_name='A.2 FCI', index_col=None)
-        WH = pd.read_excel(USN, sheet_name='A.1 Warehouse', index_col=None)
+        FCI = pd.read_excel(USN, sheet_name='A.1 Warehouse', index_col=None)
+        WH = pd.read_excel(USN, sheet_name='A.2 FCI', index_col=None)
         print('Avvvvvvv')
         FCI['WH_District'] = FCI['WH_District'].apply(lambda x: x.replace(' ', ''))
         WH['SW_District'] = WH['SW_District'].apply(lambda x: x.replace(' ', ''))
@@ -4669,6 +4668,8 @@ def processFile_leg1():
             'SW_ID',
             'Values',
             ]]
+        df4['SW_ID'] = df4['SW_ID'].astype(str)
+        WH['SW_ID'] = WH['SW_ID'].astype(str)
         df4 = pd.merge(df4, WH, on='SW_ID', how='inner')
         df51 = df4[[
             'WH_ID',
@@ -4679,7 +4680,7 @@ def processFile_leg1():
             'SW_ID',
             'SW_Name',
             'SW_District',
-            'SW_lat',
+            'SW_Lat',
             'SW_Long',
             'Values',
             ]]
@@ -4698,7 +4699,7 @@ def processFile_leg1():
         df51.rename(columns={
             'SW_ID': 'To_ID',
             'SW_Name': 'To_Name',
-            'SW_lat': 'To_Lat',
+            'SW_Lat': 'To_Lat',
             'SW_Long': 'To_Long',
             'Values' :'quantity'
             }, inplace=True)
@@ -5111,9 +5112,8 @@ def processFile_leg1():
             json_object = json.loads(json_data)
             return json.dumps(json_object, indent=1)
         input = pd.ExcelFile('Backend//Data_2.xlsx')
-        node1 = pd.read_excel(input,sheet_name="A.2 FCI")
-        node2 = pd.read_excel(input,sheet_name="A.1 Warehouse")
-        node3 = pd.read_excel(input,sheet_name="A.2 Mill")
+        node1 = pd.read_excel(input,sheet_name="A.1 Warehouse")
+        node2 = pd.read_excel(input,sheet_name="A.2 FCI")
 
         dist = [[0 for a in range(len(node2["SW_ID"]))] for b in range(len(node1["WH_ID"]))]
         phi_1 = []
@@ -5139,13 +5139,11 @@ def processFile_leg1():
                 x=math.sin(delta_phi / 2.0) ** 2 + math.cos(phi_1) * math.cos(phi_2) * math.sin(delta_lambda / 2.0) ** 2
                 y=2 * math.atan2(math.sqrt(x), math.sqrt(1 - x))
                 dist[i][j]=R*y
-                
-        # Distance matrix for node3 → node2
 
         
         
-        FCI = pd.read_excel(USN, sheet_name='A.2 FCI', index_col=None)
-        WH = pd.read_excel(USN, sheet_name='A.1 Warehouse', index_col=None)
+        FCI = pd.read_excel(USN, sheet_name='A.1 Warehouse', index_col=None)
+        WH = pd.read_excel(USN, sheet_name='A.2 FCI', index_col=None)
        
 
         FCI['WH_District'] = FCI['WH_District'].apply(lambda x: x.replace(' ', ''))
@@ -5361,11 +5359,11 @@ def processFile_leg1():
         df31 = pd.read_excel('Backend//Tagging_Sheet_Pre_leg12.xlsx')
         # Convert to object type, adjust as needed
         USN = pd.ExcelFile('Backend//Data_2.xlsx')
-        WH = pd.read_excel(USN, sheet_name='A.1 Warehouse', index_col=None)
-        FCI = pd.read_excel(USN, sheet_name='A.2 FCI', index_col=None)
+        FCI = pd.read_excel(USN, sheet_name='A.1 Warehouse', index_col=None)
+        WH = pd.read_excel(USN, sheet_name='A.2 FCI', index_col=None)
 
-
-
+        df31['WH_ID'] = df31['WH_ID'].astype(str)
+        FCI['WH_ID'] = FCI['WH_ID'].astype(str)
 
         df4 = pd.merge(df31, FCI, on='WH_ID', how='inner')
         #df4 = pd.merge(df31, FCI, on='WH_ID', how='inner')
@@ -5378,6 +5376,8 @@ def processFile_leg1():
             'SW_ID',
             'Values',
             ]]
+        df4['SW_ID'] = df4['SW_ID'].astype(str)
+        WH['SW_ID'] = WH['SW_ID'].astype(str)
         df4 = pd.merge(df4, WH, on='SW_ID', how='inner')
         df51 = df4[[
             'WH_ID',
@@ -5388,7 +5388,7 @@ def processFile_leg1():
             'SW_ID',
             'SW_Name',
             'SW_District',
-            'SW_lat',
+            'SW_Lat',
             'SW_Long',
             'Values',
             ]]
@@ -5407,7 +5407,7 @@ def processFile_leg1():
         df51.rename(columns={
             'SW_ID': 'To_ID',
             'SW_Name': 'To_Name',
-            'SW_lat': 'To_Lat',
+            'SW_Lat': 'To_Lat',
             'SW_Long': 'To_Long',
             'Values':'quantity',
             }, inplace=True)
@@ -5449,10 +5449,10 @@ def processFile_leg1():
         
         
         input = pd.ExcelFile('Backend//Data_2.xlsx')
-        node1 = pd.read_excel(input,sheet_name="A.1 Warehouse")
+        node1 = pd.read_excel(input,sheet_name="A.2 FCI")
         node1["concatenate"]= node1['SW_Lat'].round(3).astype(str) + ',' + node1['SW_Long'].round(3).astype(str)
         
-        node2 = pd.read_excel(input,sheet_name="A.2 FCI")
+        node2 = pd.read_excel(input,sheet_name="A.1 Warehouse")
         node2["concatenate1"]= node2['WH_Lat'].round(3).astype(str) + ',' + node2['WH_Long'].round(3).astype(str)
         
         
